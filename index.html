@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Workout Logger</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Script URL (Saved) -->
+      <div class="card" style="padding: 0.75rem 1rem">
+        <div class="form-group" style="margin-bottom: 0">
+          <label for="scriptUrl">Google Apps Script URL</label>
+          <input
+            type="url"
+            id="scriptUrl"
+            placeholder="https://script.google.com/macros/s/.../exec"
+          />
+        </div>
+      </div>
+
+      <!-- STAGE 1: PLAN THE FULL WORKOUT -->
+      <div class="card" id="planView">
+        <h1>Session Setup</h1>
+        <p class="subtitle">Prepare all movements for today's workout</p>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="workoutDate">Date</label>
+            <input type="date" id="workoutDate" />
+          </div>
+          <div class="form-group">
+            <label for="weekSelect">Block</label>
+            <select id="weekSelect">
+              <option value="Week 1">Week 1 (Intro)</option>
+              <option value="Week 2">Week 2 (+Load)</option>
+              <option value="Week 3">Week 3 (Peak)</option>
+              <option value="Week 4">Week 4 (Deload)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="daySelect">Session Preset</label>
+          <select id="daySelect">
+            <option value="Day 1 (Upper + Delts)">
+              Day 1 - Upper Heavy + Delts Focus
+            </option>
+            <option value="Day 2 (Overhead + Legs/Back)">
+              Day 2 - Overhead Power + Legs/Back
+            </option>
+            <option value="Day 3 (Delts Hypertrophy)">
+              Day 3 - Delts Specialization & Back
+            </option>
+            <option value="Custom">Custom / Empty Session</option>
+          </select>
+        </div>
+
+        <div
+          style="
+            margin-top: 1rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+          "
+        >
+          <label style="display: block; margin-bottom: 0.6rem"
+            >Add Exercise to Session</label
+          >
+
+          <div class="row">
+            <div class="form-group">
+              <select id="newCategory">
+                <option value="Shoulders (Side)">Shoulders (Side)</option>
+                <option value="Shoulders (Press)">Shoulders (Press)</option>
+                <option value="Chest">Chest</option>
+                <option value="Back">Back</option>
+                <option value="Legs">Legs</option>
+                <option value="Arms">Arms</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input
+                type="number"
+                id="newSets"
+                min="1"
+                max="8"
+                value="3"
+                placeholder="Sets"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              id="newExerciseName"
+              placeholder="Exercise name (e.g., Cable Lateral Raise)"
+            />
+          </div>
+
+          <button
+            type="button"
+            class="btn-secondary"
+            id="addExerciseBtn"
+            style="width: 100%; margin-bottom: 1rem"
+          >
+            + Add Exercise to Today's List
+          </button>
+        </div>
+
+        <!-- Current List of Exercises for Today -->
+        <label style="display: block; margin-bottom: 0.5rem"
+          >Today's Exercise Plan (<span id="countDisplay">0</span>)</label
+        >
+        <div id="exerciseQueue"></div>
+
+        <button
+          type="button"
+          class="btn-primary"
+          id="startWorkoutBtn"
+          style="margin-top: 1rem"
+        >
+          Start Workout Session
+        </button>
+      </div>
+
+      <!-- STAGE 2: ACTIVE SESSION (ALL EXERCISES SCROLLABLE) -->
+      <div id="activeSessionView" style="display: none">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          "
+        >
+          <div>
+            <h2
+              id="sessionTitle"
+              style="font-size: 1.15rem; color: var(--accent)"
+            >
+              Day 1 Session
+            </h2>
+            <span
+              id="sessionMeta"
+              style="font-size: 0.8rem; color: var(--text-muted)"
+            ></span>
+          </div>
+          <button type="button" class="btn-secondary" id="editSessionBtn">
+            Edit Plan
+          </button>
+        </div>
+
+        <div id="allExercisesContainer">
+          <!-- All exercises and rows inject here -->
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
